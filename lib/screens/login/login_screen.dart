@@ -37,7 +37,7 @@ class LoginScreen extends StatelessWidget {
               ),
               const SizedBox(height: 50),
               const Text(
-                'Bienvenido a nuestra App móvil',
+                'Bienvenido a nuestra app de Recursos Humanos',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 50),
