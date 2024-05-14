@@ -1,13 +1,14 @@
 import 'package:rrhh_movil/components/components.dart';
 import 'package:rrhh_movil/models/models.dart';
 import 'package:rrhh_movil/screens/login/login_screen.dart';
+import 'package:rrhh_movil/screens/pdfview.dart';
 import 'package:rrhh_movil/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:rrhh_movil/services/postulante.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:rrhh_movil/screens/screens.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -53,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Text(
                   'GESTIÓN DE LOS PROCESOS DE RECLUTAMIENTO, SELECCIÓN, PAGOS, HORARIOS Y ADMINISTRACIÓN DE LOS RECURSOS HUMANOS',
                   style: TextStyle(
-                    fontSize: 40,
+                    fontSize: 30,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -123,6 +124,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             'Lamentablemente, su solicitud ha sido rechazada en esta ocasión. Sin embargo, lo invitamos a seguir revisando nuestras oportunidades de trabajo y postularse a otros puestos que puedan ser de su interés.',
                             style: TextStyle(color: Colors.grey),
                           ),
+                          ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors
+                                  .blue, // Set the background color to blue
+                            ),
+                            child:
+                                Text('Ver Puestos disponibles'), // Button text
+                          ),
                           Divider(),
                         ],
                         if (postulante.estado == 'oferta') ...[
@@ -134,19 +144,25 @@ class _HomeScreenState extends State<HomeScreen> {
                             'Le hemos extendido una oferta de empleo. Por favor, revise los términos y condiciones de la oferta y contáctenos si tiene alguna pregunta o desea discutir los detalles.',
                             style: TextStyle(color: Colors.grey),
                           ),
-                          Divider(),
                           ElevatedButton(
                             onPressed: () {
-                              _launchURL(
-                                  'http://137.184.179.201/Contrato/PDF/${postulante.id}');
-                            },
-                            style: ElevatedButton.styleFrom(
+                              
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PDFViewerPage(
+                                    pdfUrl:
+                                        'http://137.184.179.201/api/contrato/$user_id', // Reemplaza 'URL_DEL_PDF' con la URL de tu PDF
+                                  ),
+                                ),
+                              );
+                            },style: ElevatedButton.styleFrom(
                               backgroundColor: Colors
                                   .blue, // Set the background color to blue
                             ),
-                            child: Text(
-                                'Ver Información del contrato'), // Button text
-                          )
+                            child: Text('Ver Detalles de contrato'),
+                          ),
+                          Divider(),
                         ],
                         if (postulante.estado == 'pendiente') ...[
                           Text(
@@ -167,6 +183,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           Text(
                             'Ha sido programado para una entrevista. Por favor, asegúrese de prepararse adecuadamente y estar disponible en el momento programado.',
                             style: TextStyle(color: Colors.grey),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors
+                                  .blue, // Set the background color to blue
+                            ),
+                            child: Text(
+                                'Ver Información de la entrevista'), // Button text
                           ),
                           Divider(),
                         ],
