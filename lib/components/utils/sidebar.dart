@@ -59,6 +59,13 @@ class SideBar extends StatelessWidget {
                   Provider.of<AuthService>(context, listen: false).logout();
                 },
               ),
+ListTile(
+  leading: const Icon(Icons.assignment),
+  title: const Text('Gestionar Permisos de Personal'),
+  onTap: () {
+    Navigator.pushNamed(context, 'historial');
+  },
+),
             ],
           );
         }

@@ -1,23 +1,21 @@
-// ignore_for_file: sort_child_properties_last
-
-import 'package:rrhh_movil/services/auth/auth_service.dart';
-import 'package:rrhh_movil/widgets/widgets.dart';
-import 'package:rrhh_movil/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rrhh_movil/providers/providers.dart';
+import 'package:rrhh_movil/services/auth/auth_service.dart';
+import 'package:rrhh_movil/widgets/widgets.dart';
 import 'package:rrhh_movil/ui/input_decorations.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text(''),
-        ),
-        body: AuthBackground(
-            child: SingleChildScrollView(
+      appBar: AppBar(
+        title: const Text(''),
+      ),
+      body: AuthBackground(
+        child: SingleChildScrollView(
           child: Column(
             children: [
               const SizedBox(height: 250),
@@ -25,21 +23,29 @@ class LoginScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     const SizedBox(height: 10),
-                    Text('Iniciar Sesión',
-                        style: Theme.of(context).textTheme.headlineMedium),
+                    Text(
+                      'Iniciar Sesión',
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
                     const SizedBox(height: 30),
                     ChangeNotifierProvider(
-                        create: (_) => loginformprovider(), child: _LoginForm())
+                      create: (_) => loginformprovider(),
+                      child: _LoginForm(),
+                    ),
                   ],
                 ),
               ),
               const SizedBox(height: 50),
-              const Text('Bienvenido a nuestra App movil',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const Text(
+                'Bienvenido a nuestra app de Recursos Humanos',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
               const SizedBox(height: 50),
             ],
           ),
-        )));
+        ),
+      ),
+    );
   }
 }
 
@@ -57,9 +63,10 @@ class _LoginForm extends StatelessWidget {
             autocorrect: false,
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecorations.authInputDecoration(
-                hintText: 'user@gmail.com',
-                labelText: 'Correo Electronico',
-                prefixIcon: Icons.alternate_email_sharp),
+              hintText: 'user@gmail.com',
+              labelText: 'Correo Electrónico',
+              prefixIcon: Icons.alternate_email_sharp,
+            ),
             onChanged: (value) => loginForm.email = value,
           ),
           const SizedBox(height: 30),
@@ -67,10 +74,12 @@ class _LoginForm extends StatelessWidget {
             autocorrect: false,
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecorations.authInputDecoration(
-                hintText: 'Password',
-                labelText: 'Contraseña',
-                prefixIcon: Icons.lock_outline),
+              hintText: 'Password',
+              labelText: 'Contraseña',
+              prefixIcon: Icons.lock_outline,
+            ),
             onChanged: (value) => loginForm.password = value,
+            obscureText: true, // Oculta el texto de la contraseña
             validator: (value) {
               if (value != null && value.length >= 8) return null;
               return 'La contraseña es demasiado corta';
@@ -78,55 +87,51 @@ class _LoginForm extends StatelessWidget {
           ),
           const SizedBox(height: 30),
           MaterialButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            disabledColor: Colors.grey,
+            elevation: 0,
+            color: Colors.blue,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
+              child: Text(
+                loginForm.isLoading ? 'Espere' : 'Ingresar',
+                style: const TextStyle(color: Colors.white),
               ),
-              disabledColor: Colors.grey,
-              elevation: 0,
-              color: Colors.blue,
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
-                child: Text(
-                  loginForm.isLoading ? 'Espere' : 'Ingresar',
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ),
-              onPressed: loginForm.isLoading
-                  ? null
-                  : () async {
-                      FocusScope.of(context).unfocus();
-                      if (!loginForm.isValidForm()) return;
-                      loginForm.isLoading = true;
-                      // await Future.delayed(const Duration(seconds: 2));
+            ),
+            onPressed: loginForm.isLoading
+                ? null
+                : () async {
+                    FocusScope.of(context).unfocus();
+                    if (!loginForm.isValidForm()) return;
+                    loginForm.isLoading = true;
 
-                      final authService =
-                          Provider.of<AuthService>(context, listen: false);
+                    final authService =
+                        Provider.of<AuthService>(context, listen: false);
 
-                      String respuesta = await authService.login(
-                          loginForm.email, loginForm.password, 'movile');
+                    String respuesta = await authService.login(
+                        loginForm.email, loginForm.password, 'movile');
 
-                      if (respuesta == 'correcto') {
-                        loginForm.isLoading = false;
-                        Navigator.pop(context);
-                      }
-                    })
+                    if (respuesta == 'correcto') {
+                      loginForm.isLoading = false;
+                      Navigator.pop(context);
+                    } else {
+                      loginForm.isLoading = false;
+                      _showErrorSnackbar(context, respuesta);
+                    }
+                  },
+          ),
         ],
       ),
     );
   }
-}
 
-class _DialogoAlerta extends StatelessWidget {
-  final String mensaje;
-
-  const _DialogoAlerta({required this.mensaje});
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text('Error'),
-      content: Text(mensaje),
+  void _showErrorSnackbar(BuildContext context, String errorMessage) {
+    final snackBar = SnackBar(
+      content: Text(errorMessage),
+      backgroundColor: Colors.red,
     );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }
