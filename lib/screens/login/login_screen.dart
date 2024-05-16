@@ -25,7 +25,7 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(height: 10),
                     Text(
                       'Iniciar Sesión',
-                      style: Theme.of(context).textTheme.headline6,
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     const SizedBox(height: 30),
                     ChangeNotifierProvider(
@@ -63,7 +63,7 @@ class _LoginForm extends StatelessWidget {
             autocorrect: false,
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecorations.authInputDecoration(
-              hintText: 'user@gmail.com',
+              hintText: '',
               labelText: 'Correo Electrónico',
               prefixIcon: Icons.alternate_email_sharp,
             ),
@@ -74,7 +74,7 @@ class _LoginForm extends StatelessWidget {
             autocorrect: false,
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecorations.authInputDecoration(
-              hintText: 'Password',
+              hintText: '',
               labelText: 'Contraseña',
               prefixIcon: Icons.lock_outline,
             ),

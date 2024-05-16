@@ -9,6 +9,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:rrhh_movil/services/postulante.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:rrhh_movil/screens/screens.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -38,39 +39,129 @@ class _HomeScreenState extends State<HomeScreen> {
     return Consumer<AuthService>(builder: (context, auth, child) {
       if (!auth.authentificated) {
         return Scaffold(
-          appBar: AppBar(
-            backgroundColor: const Color.fromARGB(255, 248, 244, 243),
-            elevation: 0, // Remove shadow
-            title: const Text(
-              '',
-              style: TextStyle(color: Colors.black), // Text color
-            ),
-          ),
           body: Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 0.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'GESTIÓN DE LOS PROCESOS DE RECLUTAMIENTO, SELECCIÓN, PAGOS, HORARIOS Y ADMINISTRACIÓN DE LOS RECURSOS HUMANOS',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
+                Center(
+                  child: Text(
+                    'RRHH',
+                    style: TextStyle(
+                      fontSize: 35,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                SizedBox(height: 40),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoginScreen(),
+                SizedBox(height: 5),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Acción del botón "Puestos Disponibles"
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
                       ),
-                    );
-                  },
-                  child: Text('Iniciar Sesión'),
+                      backgroundColor: Colors.purple[100], // background color
+                    ),
+                    child: Text(
+                      'Puestos Disponibles',
+                      style: TextStyle(
+                        color: Colors.purple, // text color
+                      ),
+                    ),
+                  ),
                 ),
-                SizedBox(height: 20),
+              
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Acción del botón "Puestos Disponibles"
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      backgroundColor: Colors.purple[100], // background color
+                    ),
+                    child: Text(
+                      'Información de la Empresa',
+                      style: TextStyle(
+                        color: Colors.purple, // text color
+                      ),
+                    ),
+                  ),
+                ),
+                
+                Expanded(
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          'assets/utils/HomeScreenPicture.png', // Path to your image
+                          height: 200,
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'ADMINISTRACIÓN',
+                          style: TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blueGrey[800],
+                          ),
+                        ),
+                        Text(
+                          'RECURSOS HUMANOS',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.orange,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'Bienvenido a nuestra empresa de administración de recursos humanos. Aumenta la productividad en los procesos de remuneraciones, asistencia, documentación, desempeño y mucho más.',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.blueGrey[600],
+                          ),
+                        ),
+                        SizedBox(height: 40),
+                        Align(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const LoginScreen(),
+                                ),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              backgroundColor:
+                                  Colors.purple[100], // background color
+                              minimumSize: Size(
+                                  200, 50), // Define el tamaño mínimo del botón
+                            ),
+                            child: Text(
+                              'Iniciar Sesión',
+                              style: TextStyle(
+                                color: Colors.purple, // text color
+                                fontSize: 20, // Tamaño de fuente del texto
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -146,7 +237,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           ElevatedButton(
                             onPressed: () {
-                              
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -156,7 +246,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                               );
-                            },style: ElevatedButton.styleFrom(
+                            },
+                            style: ElevatedButton.styleFrom(
                               backgroundColor: Colors
                                   .blue, // Set the background color to blue
                             ),
