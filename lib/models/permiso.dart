@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class Permiso {
   final int id;
   final int userId;
