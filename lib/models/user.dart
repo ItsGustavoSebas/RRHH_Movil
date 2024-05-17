@@ -20,6 +20,7 @@ class User {
     String createdAt;
     String updatedAt;
     String profilePhotoUrl;
+    String? foto;
 
     User({
         required this.id,
@@ -36,6 +37,7 @@ class User {
         required this.createdAt,
         required this.updatedAt,
         required this.profilePhotoUrl,
+        required this.foto
     });
 
     factory User.fromJson(Map<String, dynamic> json) => User(
@@ -53,6 +55,7 @@ class User {
         createdAt: json["created_at"],
         updatedAt: json["updated_at"],
         profilePhotoUrl: json["profile_photo_url"],
+        foto: json["foto"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -70,5 +73,6 @@ class User {
         "created_at": createdAt,
         "updated_at": updatedAt,
         "profile_photo_url": profilePhotoUrl,
+        "foto": foto,
     };
 }

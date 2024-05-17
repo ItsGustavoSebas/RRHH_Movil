@@ -20,6 +20,8 @@ class Postulante {
     String fuenteDeContratacion;
     String idioma;
     String nivelIdioma;
+    String foto;
+
 
     Postulante({
         required this.id,
@@ -36,6 +38,7 @@ class Postulante {
         required this.fuenteDeContratacion,
         required this.idioma,
         required this.nivelIdioma,
+        required this.foto,
     });
 
     factory Postulante.fromJson(Map<String, dynamic> json) => Postulante(
@@ -53,6 +56,8 @@ class Postulante {
         fuenteDeContratacion: json["fuenteDeContratacion"],
         idioma: json["idioma"],
         nivelIdioma: json["nivel_idioma"],
+        foto: json["foto"],
+
     );
 
     Map<String, dynamic> toJson() => {
@@ -70,5 +75,6 @@ class Postulante {
         "fuenteDeContratacion": fuenteDeContratacion,
         "idioma": idioma,
         "nivel_idioma": nivelIdioma,
+        "foto": foto,
     };
 }

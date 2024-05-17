@@ -1,4 +1,3 @@
-
 import 'package:rrhh_movil/screens/screens.dart';
 import 'package:rrhh_movil/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
@@ -34,12 +33,19 @@ class SideBar extends StatelessWidget {
                 accountEmail: Text(auth.user.email),
                 currentAccountPicture: CircleAvatar(
                   child: ClipOval(
-                    child: Image.network(
-                      'https://cdn.pixabay.com/photo/2018/11/13/22/01/avatar-3814081_640.png',
-                      width: 90,
-                      height: 90,
-                      fit: BoxFit.cover,
-                    ),
+                    child: auth.user.foto != null
+                        ? Image.network(
+                            'http://137.184.179.201/${auth.user.foto}',
+                            width: 90,
+                            height: 90,
+                            fit: BoxFit.cover,
+                          )
+                        : Text(
+                            auth.user.name.isNotEmpty
+                                ? auth.user.name[0].toUpperCase()
+                                : '?', // Mostrar '?' si el nombre está vacío
+                            style: TextStyle(fontSize: 24),
+                          ),
                   ),
                 ),
                 decoration: const BoxDecoration(
@@ -59,13 +65,13 @@ class SideBar extends StatelessWidget {
                   Provider.of<AuthService>(context, listen: false).logout();
                 },
               ),
-ListTile(
-  leading: const Icon(Icons.assignment),
-  title: const Text('Gestionar Permisos de Personal'),
-  onTap: () {
-    Navigator.pushNamed(context, 'historial');
-  },
-),
+              ListTile(
+                leading: const Icon(Icons.assignment),
+                title: const Text('Gestionar Permisos de Personal'),
+                onTap: () {
+                  Navigator.pushNamed(context, 'historial');
+                },
+              ),
             ],
           );
         }

@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class Servidor {
-  final String baseUrl = '/permisos/historial';
-}
+import 'package:rrhh_movil/services/services.dart';
+
 
 class HistorialScreen extends StatefulWidget {
   const HistorialScreen({super.key});
