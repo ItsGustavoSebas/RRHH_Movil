@@ -2,13 +2,13 @@
 import 'package:rrhh_movil/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:rrhh_movil/models/models.dart';
+import 'package:rrhh_movil/screens/mensajesScreen.dart';
 import 'package:rrhh_movil/screens/screens.dart';
 import 'package:rrhh_movil/services/postulante.dart';
 
-
 class DashboardPostulante extends StatefulWidget {
   final String userId;
-  
+
   const DashboardPostulante({Key? key, required this.userId}) : super(key: key);
 
   @override
@@ -32,6 +32,19 @@ class _DashboardPostulanteState extends State<DashboardPostulante> {
       drawer: const SideBar(),
       appBar: AppBar(
         title: const Text('Recursos Humanos'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.message),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MessageListScreen(userId: widget.userId),
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: FutureBuilder<Postulante>(
         future: _postulanteFuture,
@@ -64,14 +77,14 @@ class _DashboardPostulanteState extends State<DashboardPostulante> {
                                 // Acción del botón "Información del contrato"
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors
-                                    .blue, // Color de fondo del botón
+                                backgroundColor:
+                                    Colors.blue, // Color de fondo del botón
                               ),
                               child: const Text(
                                 'Puestos Disponibles',
                                 style: TextStyle(
-                                  color: Colors
-                                      .white, // Color del texto del botón
+                                  color:
+                                      Colors.white, // Color del texto del botón
                                 ),
                               ),
                             ),
@@ -83,14 +96,14 @@ class _DashboardPostulanteState extends State<DashboardPostulante> {
                                 // Acción del botón "Información del contrato"
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors
-                                    .blue, // Color de fondo del botón
+                                backgroundColor:
+                                    Colors.blue, // Color de fondo del botón
                               ),
                               child: const Text(
                                 'Información del contrato',
                                 style: TextStyle(
-                                  color: Colors
-                                      .white, // Color del texto del botón
+                                  color:
+                                      Colors.white, // Color del texto del botón
                                 ),
                               ),
                             ),
@@ -102,14 +115,14 @@ class _DashboardPostulanteState extends State<DashboardPostulante> {
                                 // Acción del botón "Información del contrato"
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors
-                                    .blue, // Color de fondo del botón
+                                backgroundColor:
+                                    Colors.blue, // Color de fondo del botón
                               ),
                               child: const Text(
                                 'Información de la entrevista',
                                 style: TextStyle(
-                                  color: Colors
-                                      .white, // Color del texto del botón
+                                  color:
+                                      Colors.white, // Color del texto del botón
                                 ),
                               ),
                             ),
@@ -126,8 +139,8 @@ class _DashboardPostulanteState extends State<DashboardPostulante> {
                             child: const Text(
                               'Editar Información',
                               style: TextStyle(
-                                color: Colors
-                                    .white, // Color del texto del botón
+                                color:
+                                    Colors.white, // Color del texto del botón
                               ),
                             ),
                           ),
@@ -260,11 +273,12 @@ class _DashboardPostulanteState extends State<DashboardPostulante> {
                         child: TextButton(
                           onPressed: () {
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => EducacionesScreen(userId: widget.userId),
-                                ),
-                              );
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    EducacionesScreen(userId: widget.userId),
+                              ),
+                            );
                           },
                           child: const Text(
                             'Educaciones',
@@ -279,11 +293,12 @@ class _DashboardPostulanteState extends State<DashboardPostulante> {
                         child: TextButton(
                           onPressed: () {
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ReconocimientosScreen(userId: widget.userId),
-                                ),
-                              );
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ReconocimientosScreen(
+                                    userId: widget.userId),
+                              ),
+                            );
                           },
                           child: const Text(
                             'Reconocimientos',
@@ -298,11 +313,12 @@ class _DashboardPostulanteState extends State<DashboardPostulante> {
                         child: TextButton(
                           onPressed: () {
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ExperienciasScreen(userId: widget.userId),
-                                ),
-                              );
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    ExperienciasScreen(userId: widget.userId),
+                              ),
+                            );
                           },
                           child: const Text(
                             'Experiencias',
@@ -317,11 +333,12 @@ class _DashboardPostulanteState extends State<DashboardPostulante> {
                         child: TextButton(
                           onPressed: () {
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ReferenciasScreen(userId: widget.userId),
-                                ),
-                              );
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    ReferenciasScreen(userId: widget.userId),
+                              ),
+                            );
                           },
                           child: const Text(
                             'Referencias',

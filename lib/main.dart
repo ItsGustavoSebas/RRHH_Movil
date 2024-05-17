@@ -22,6 +22,8 @@ class _AppStateState extends State<AppState> {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthService()),
         ChangeNotifierProvider(create: ( _ ) => EducacionesService()),
+        ChangeNotifierProvider(create: (_) => UserService()),
+        ChangeNotifierProvider(create: (_) => MessageService()),
       ],
       child: const MyApp(),
     );

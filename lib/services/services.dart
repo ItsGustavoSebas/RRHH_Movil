@@ -1,5 +1,9 @@
 
 
+export 'package:rrhh_movil/services/usersService.dart';
+
+export 'package:rrhh_movil/services/mensajes.dart';
+
 export 'package:rrhh_movil/services/educaciones.dart';
 export 'package:rrhh_movil/services/experiencias.dart';
 export 'package:rrhh_movil/services/reconocimientos.dart';

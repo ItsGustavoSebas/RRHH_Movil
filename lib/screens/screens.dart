@@ -1,5 +1,9 @@
 
 
+export 'package:rrhh_movil/screens/listaUsuariosScreen.dart';
+
+export 'package:rrhh_movil/screens/detalleMensajeScreen.dart';
+
 export 'package:rrhh_movil/screens/educacionesScreen.dart';
 export 'package:rrhh_movil/screens/experienciasScreen.dart';
 export 'package:rrhh_movil/screens/reconocimientosScreen.dart';
