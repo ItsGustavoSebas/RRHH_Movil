@@ -8,12 +8,14 @@ class Message {
   String lastMessage;
   String name;
   String? avatar;
+  int pendiente;
 
   Message({
     required this.id,
     required this.lastMessage,
     required this.name,
     this.avatar,
+    required this.pendiente,
   });
 
   factory Message.fromJson(Map<String, dynamic> json) => Message(
@@ -21,6 +23,7 @@ class Message {
     lastMessage: json["last_message"],
     name: json["name"],
     avatar: json["avatar"],
+    pendiente: json["pendiente"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -28,5 +31,6 @@ class Message {
     "last_message": lastMessage,
     "name": name,
     "avatar": avatar,
+    "pendiente": pendiente,
   };
 }

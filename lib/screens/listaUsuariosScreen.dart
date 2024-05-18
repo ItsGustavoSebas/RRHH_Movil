@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:rrhh_movil/services/services.dart';
 import 'package:rrhh_movil/models/users.dart';
 import 'package:rrhh_movil/screens/screens.dart';
-
+final GlobalKey<NavigatorState> _chatScreenKey = GlobalKey<NavigatorState>();
 class UserListScreen extends StatelessWidget {
   final String userId;
 
@@ -37,6 +37,7 @@ class UserListScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => ChatScreen(
+                        key: _chatScreenKey,
                         currentUserId: userId,
                         otherUserId: user.id,
                         otherUserName: user.name,
