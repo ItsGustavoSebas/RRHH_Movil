@@ -1,6 +1,7 @@
 // welcome.dart
 import 'package:flutter/material.dart';
 import 'package:rrhh_movil/screens/login/login_screen.dart';
+import 'package:rrhh_movil/screens/login/register_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -25,7 +26,12 @@ class WelcomeScreen extends StatelessWidget {
           Center(
             child: ElevatedButton(
               onPressed: () {
-                // Acción del botón "Puestos Disponibles"
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const RegisterSreen(),
+                  ),
+                );
               },
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
@@ -110,8 +116,8 @@ class WelcomeScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20.0),
                         ),
                         backgroundColor: Colors.purple[100], // background color
-                        minimumSize: Size(
-                          200, 50), // Define el tamaño mínimo del botón
+                        minimumSize:
+                            Size(200, 50), // Define el tamaño mínimo del botón
                       ),
                       child: Text(
                         'Iniciar Sesión',

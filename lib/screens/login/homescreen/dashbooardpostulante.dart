@@ -2,6 +2,8 @@
 import 'package:rrhh_movil/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:rrhh_movil/models/models.dart';
+import 'package:rrhh_movil/screens/postulacion/postulanteinfo.dart';
+import 'package:rrhh_movil/screens/postulacion/postulanteinfoEdit.dart';
 import 'package:rrhh_movil/screens/mensajesScreen.dart';
 import 'package:rrhh_movil/screens/screens.dart';
 import 'package:rrhh_movil/services/postulante.dart';
@@ -52,7 +54,16 @@ class _DashboardPostulanteState extends State<DashboardPostulante> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
+            // Navegar a otra vista y reemplazar la actual
+            Future.microtask(() {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => postulanteinfo()),
+              );
+            });
+
+            // Mientras se realiza la navegación, devuelve un contenedor vacío o cualquier widget de carga
+            return Container();
           } else {
             final postulante = snapshot.data!;
             return SingleChildScrollView(
@@ -130,7 +141,12 @@ class _DashboardPostulanteState extends State<DashboardPostulante> {
                           ],
                           ElevatedButton(
                             onPressed: () {
-                              // Acción del botón "Editar"
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>postulanteinfoEdit(),
+                                ),
+                              );
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
@@ -141,6 +157,30 @@ class _DashboardPostulanteState extends State<DashboardPostulante> {
                               style: TextStyle(
                                 color:
                                     Colors.white, // Color del texto del botón
+
+                              ),
+                            ),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DashboardPostulante(
+                                      userId: widget.userId),
+                                ),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  Colors.grey, // Color de fondo del botón
+                            ),
+                            child: const Text(
+                              'Verificar Postulación',
+                              style: TextStyle(
+                                color:
+                                    Colors.white, // Color del texto del botón
+
                               ),
                             ),
                           ),
@@ -174,7 +214,7 @@ class _DashboardPostulanteState extends State<DashboardPostulante> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Por favor, complete toda la información requerida en su solicitud para continuar con el proceso de postulación.',
+                      'Por favor, complete toda la información requerida (Educaciones, Reconocimientos, Experiencias, Referencias) en su solicitud para continuar con el proceso de postulación.',
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.grey[700],
