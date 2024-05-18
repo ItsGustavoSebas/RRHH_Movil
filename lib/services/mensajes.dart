@@ -92,7 +92,6 @@ class MessageService extends ChangeNotifier {
       );
 
       if (response.statusCode == 200) {
-        fetchMessages(userId, receptorId.toString());
       } else {
         throw Exception('Failed to send message');
       }
