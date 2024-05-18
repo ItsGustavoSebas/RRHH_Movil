@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rrhh_movil/screens/postulacion/reconocimiento/crearReconocimiento.dart';
+import 'package:rrhh_movil/screens/postulacion/reconocimiento/editarReconocimiento.dart';
 import 'package:rrhh_movil/services/services.dart';
+import 'package:http/http.dart' as http;
 
 class ReconocimientosScreen extends StatefulWidget {
   final String userId;
@@ -13,6 +16,7 @@ class ReconocimientosScreen extends StatefulWidget {
 
 class _ReconocimientosScreenState extends State<ReconocimientosScreen> {
   late ReconocimientosService reconocimientosService;
+  Servidor servidor = Servidor();
 
   @override
   void initState() {
@@ -21,6 +25,26 @@ class _ReconocimientosScreenState extends State<ReconocimientosScreen> {
     final user_id = authService.user.id.toString();
     reconocimientosService = ReconocimientosService();
     reconocimientosService.loadReconocimientos(user_id);
+  }
+
+    Future<void> _deleteReconocimiento(int idEducacion) async {
+    final uri = Uri.parse('${servidor.baseUrl}/reconocimientoEliminar/$idEducacion');
+    final response = await http.delete(uri);
+
+    if (response.statusCode == 200) {
+      Navigator.pop(context, true);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Reconocimiento eliminada exitosamente'),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Error al eliminar el reconocimiento'),
+        ),
+      );
+    }
   }
 
   @override
@@ -44,7 +68,10 @@ class _ReconocimientosScreenState extends State<ReconocimientosScreen> {
                 IconButton(
                   icon: const Icon(Icons.add),
                   onPressed: () {
-                    // Implementar lógica para añadir nuevo reconocimiento
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CrearReconocimiento()),
+                    );
                   },
                 ),
               ],
@@ -74,14 +101,18 @@ class _ReconocimientosScreenState extends State<ReconocimientosScreen> {
                             IconButton(
                               icon: const Icon(Icons.edit, color: Colors.green),
                               onPressed: () {
-                                // Implementar lógica para editar
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        EditarReconocimiento(id: educacion.id),
+                                  ),
+                                );
                               },
                             ),
                             IconButton(
                               icon: const Icon(Icons.delete, color: Colors.red),
-                              onPressed: () {
-                                // Implementar lógica para eliminar
-                              },
+                              onPressed: () => _deleteReconocimiento(educacion.id),
                             ),
                           ],
                         ),

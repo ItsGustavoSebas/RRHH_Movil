@@ -1,8 +1,13 @@
 import 'package:rrhh_movil/components/components.dart';
 import 'package:rrhh_movil/screens/screens.dart';
+import 'package:rrhh_movil/services/fuente_de_contratacion.dart';
+import 'package:rrhh_movil/services/idiomas.dart';
+import 'package:rrhh_movil/services/nivel_ingles.dart';
+import 'package:rrhh_movil/services/puesto_disponible.dart';
 import 'package:rrhh_movil/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runApp(const AppState());
@@ -21,7 +26,11 @@ class _AppStateState extends State<AppState> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthService()),
-        ChangeNotifierProvider(create: ( _ ) => EducacionesService()),
+        ChangeNotifierProvider(create: (_) => EducacionesService()),
+        ChangeNotifierProvider(create: (_) => IdiomasService()),
+        ChangeNotifierProvider(create: (_) => FuenteDeContratacionService()),
+        ChangeNotifierProvider(create: (_) => PuestoDisponibleService()),
+        ChangeNotifierProvider(create: (_) => NivelIdiomasService()),
       ],
       child: const MyApp(),
     );
@@ -34,14 +43,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Agenda Electrónica',
+      title: 'RRHH',
       initialRoute: 'splash',
       routes: {
         'inicio': (_) => const InicioScreen(),
         '/': (_) => const HomeScreen(),
         'splash': (_) => const SplashScreen(),
         'login': (_) => const LoginScreen(),
-        'historial': (_) => const HistorialScreen(),  // Ruta actualizada
+        'historial': (_) => const HistorialScreen(), // Ruta actualizada
       },
       theme: ThemeData.light().copyWith(
         scaffoldBackgroundColor: const Color.fromARGB(255, 248, 244, 243),
@@ -50,6 +59,16 @@ class MyApp extends StatelessWidget {
           color: Colors.blue,
         ),
       ),
+
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('es', 'ES'), // Español
+      ],
+      locale: const Locale('es', 'ES'), // Establece el idioma por defecto
     );
   }
 }

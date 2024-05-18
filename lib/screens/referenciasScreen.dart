@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rrhh_movil/screens/postulacion/referencia/crearReferencia.dart';
+import 'package:rrhh_movil/screens/postulacion/referencia/editarReferencia.dart';
 import 'package:rrhh_movil/services/services.dart';
+import 'package:http/http.dart' as http;
 
 class ReferenciasScreen extends StatefulWidget {
   final String userId;
@@ -13,6 +16,7 @@ class ReferenciasScreen extends StatefulWidget {
 
 class _ReferenciasScreenState extends State<ReferenciasScreen> {
   late ReferenciasService referenciasService;
+  Servidor servidor = Servidor();
 
   @override
   void initState() {
@@ -21,6 +25,26 @@ class _ReferenciasScreenState extends State<ReferenciasScreen> {
     final user_id = authService.user.id.toString();
     referenciasService = ReferenciasService();
     referenciasService.loadReferencias(user_id);
+  }
+
+    Future<void> _deleteReferencia(int idEducacion) async {
+    final uri = Uri.parse('${servidor.baseUrl}/referenciaEliminar/$idEducacion');
+    final response = await http.delete(uri);
+
+    if (response.statusCode == 200) {
+      Navigator.pop(context, true);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Referencia eliminada exitosamente'),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Error al eliminar la referencia'),
+        ),
+      );
+    }
   }
 
   @override
@@ -44,7 +68,10 @@ class _ReferenciasScreenState extends State<ReferenciasScreen> {
                 IconButton(
                   icon: const Icon(Icons.add),
                   onPressed: () {
-                    // Implementar lógica para añadir nueva referencia
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CrearReferencia()),
+                    );
                   },
                 ),
               ],
@@ -75,14 +102,18 @@ class _ReferenciasScreenState extends State<ReferenciasScreen> {
                             IconButton(
                               icon: const Icon(Icons.edit, color: Colors.green),
                               onPressed: () {
-                                // Implementar lógica para editar
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        EditarReferencia(id: educacion.id),
+                                  ),
+                                );
                               },
                             ),
                             IconButton(
                               icon: const Icon(Icons.delete, color: Colors.red),
-                              onPressed: () {
-                                // Implementar lógica para eliminar
-                              },
+                              onPressed: () => _deleteReferencia(educacion.id),
                             ),
                           ],
                         ),

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rrhh_movil/screens/postulacion/educacion/crearEducacion.dart';
+import 'package:rrhh_movil/screens/postulacion/educacion/editarEducacion.dart';
 import 'package:rrhh_movil/services/services.dart';
+import 'package:http/http.dart' as http;
 
 class EducacionesScreen extends StatefulWidget {
   final String userId;
@@ -13,6 +16,7 @@ class EducacionesScreen extends StatefulWidget {
 
 class _EducacionesScreenState extends State<EducacionesScreen> {
   late EducacionesService educacionesService;
+  Servidor servidor = Servidor();
 
   @override
   void initState() {
@@ -21,6 +25,26 @@ class _EducacionesScreenState extends State<EducacionesScreen> {
     final user_id = authService.user.id.toString();
     educacionesService = EducacionesService();
     educacionesService.loadEducaciones(user_id);
+  }
+
+  Future<void> _deleteEducacion(int idEducacion) async {
+    final uri = Uri.parse('${servidor.baseUrl}/educacionEliminar/$idEducacion');
+    final response = await http.delete(uri);
+
+    if (response.statusCode == 200) {
+      Navigator.pop(context, true);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Educación eliminada exitosamente'),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Error al eliminar la educación'),
+        ),
+      );
+    }
   }
 
   @override
@@ -44,7 +68,10 @@ class _EducacionesScreenState extends State<EducacionesScreen> {
                 IconButton(
                   icon: const Icon(Icons.add),
                   onPressed: () {
-                    // Implementar lógica para añadir nueva educación
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CrearEducacion()),
+                    );
                   },
                 ),
               ],
@@ -55,7 +82,8 @@ class _EducacionesScreenState extends State<EducacionesScreen> {
                 final educacion = educacionesService.educaciones[index];
                 return Card(
                   elevation: 4.0,
-                  margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
@@ -68,8 +96,10 @@ class _EducacionesScreenState extends State<EducacionesScreen> {
                         Text('Nombre del colegio: ${educacion.nombreColegio}'),
                         Text('Grado Diploma: ${educacion.gradoDiploma}'),
                         Text('Campo de estudio: ${educacion.campoDeEstudio}'),
-                        Text('Fecha de finalización: ${educacion.fechaDeFinalizacion.toLocal().toString().split(' ')[0]}'),
-                        Text('Notas adicionales: ${educacion.notasAdicionales}'),
+                        Text(
+                            'Fecha de finalización: ${educacion.fechaDeFinalizacion.toLocal().toString().split(' ')[0]}'),
+                        Text(
+                            'Notas adicionales: ${educacion.notasAdicionales}'),
                         Text('Postulante: ${educacion.idPostulante}'),
                         const SizedBox(height: 10),
                         Row(
@@ -77,14 +107,18 @@ class _EducacionesScreenState extends State<EducacionesScreen> {
                             IconButton(
                               icon: const Icon(Icons.edit, color: Colors.green),
                               onPressed: () {
-                                // Implementar lógica para editar
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        EditarEducacion(id: educacion.id),
+                                  ),
+                                );
                               },
                             ),
                             IconButton(
                               icon: const Icon(Icons.delete, color: Colors.red),
-                              onPressed: () {
-                                // Implementar lógica para eliminar
-                              },
+                              onPressed: () => _deleteEducacion(educacion.id),
                             ),
                           ],
                         ),

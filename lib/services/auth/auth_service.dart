@@ -82,6 +82,32 @@ class AuthService extends ChangeNotifier {
     }
   }
 
+  Future<String> register(
+      String name, String email, String ci, String telefono, String direccion, String password) async {
+    try {
+      final response =
+          await http.post(Uri.parse('${servidor.baseUrl}/register'),
+              body: ({
+                'name': name,
+                'email': email,
+                'ci': ci,
+                'telefono': telefono,
+                'direccion': direccion,
+                'password': password,
+              }));
+
+      if (response.statusCode == 200) {
+        String token = response.body.toString();
+        tryToken(token);
+        return 'correcto';
+      } else {
+        return 'incorrecto';
+      }
+    } catch (e) {
+      return 'error';
+    }
+  }
+
   void tryToken(String? token) async {
     if (token == null) {
       return;
