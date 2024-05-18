@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rrhh_movil/screens/postulacion/experiencia/crearExperiencia.dart';
+import 'package:rrhh_movil/screens/postulacion/experiencia/editarExperiencia.dart';
 import 'package:rrhh_movil/services/services.dart';
+import 'package:http/http.dart' as http;
 
 class ExperienciasScreen extends StatefulWidget {
   final String userId;
@@ -13,6 +16,7 @@ class ExperienciasScreen extends StatefulWidget {
 
 class _ExperienciasScreenState extends State<ExperienciasScreen> {
   late ExperienciasService experienciasService;
+  Servidor servidor = Servidor();
 
   @override
   void initState() {
@@ -21,6 +25,25 @@ class _ExperienciasScreenState extends State<ExperienciasScreen> {
     final user_id = authService.user.id.toString();
     experienciasService = ExperienciasService();
     experienciasService.loadExperiencias(user_id);
+  }
+    Future<void> _deleteExperiencia(int idEducacion) async {
+    final uri = Uri.parse('${servidor.baseUrl}/experienciaEliminar/$idEducacion');
+    final response = await http.delete(uri);
+
+    if (response.statusCode == 200) {
+      Navigator.pop(context, true);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Experiencia eliminada exitosamente'),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Error al eliminar la educación'),
+        ),
+      );
+    }
   }
 
   @override
@@ -44,7 +67,11 @@ class _ExperienciasScreenState extends State<ExperienciasScreen> {
                 IconButton(
                   icon: const Icon(Icons.add),
                   onPressed: () {
-                    // Implementar lógica para añadir nueva experiencia
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CrearExperiencia()),
+                    );
                   },
                 ),
               ],
@@ -76,14 +103,18 @@ class _ExperienciasScreenState extends State<ExperienciasScreen> {
                             IconButton(
                               icon: const Icon(Icons.edit, color: Colors.green),
                               onPressed: () {
-                                // Implementar lógica para editar
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        EditarExperiencia(id: educacion.id),
+                                  ),
+                                );
                               },
                             ),
                             IconButton(
                               icon: const Icon(Icons.delete, color: Colors.red),
-                              onPressed: () {
-                                // Implementar lógica para eliminar
-                              },
+                              onPressed: () => _deleteExperiencia(educacion.id),
                             ),
                           ],
                         ),
