@@ -26,11 +26,15 @@ class _AppStateState extends State<AppState> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthService()),
+
         ChangeNotifierProvider(create: (_) => EducacionesService()),
         ChangeNotifierProvider(create: (_) => IdiomasService()),
         ChangeNotifierProvider(create: (_) => FuenteDeContratacionService()),
         ChangeNotifierProvider(create: (_) => PuestoDisponibleService()),
         ChangeNotifierProvider(create: (_) => NivelIdiomasService()),
+        ChangeNotifierProvider(create: (_) => UserService()),
+        ChangeNotifierProvider(create: (_) => MessageService()),
+
       ],
       child: const MyApp(),
     );

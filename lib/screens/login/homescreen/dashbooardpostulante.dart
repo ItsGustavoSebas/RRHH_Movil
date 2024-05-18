@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:rrhh_movil/models/models.dart';
 import 'package:rrhh_movil/screens/postulacion/postulanteinfo.dart';
 import 'package:rrhh_movil/screens/postulacion/postulanteinfoEdit.dart';
+import 'package:rrhh_movil/screens/mensajesScreen.dart';
 import 'package:rrhh_movil/screens/screens.dart';
 import 'package:rrhh_movil/services/postulante.dart';
 
@@ -33,6 +34,19 @@ class _DashboardPostulanteState extends State<DashboardPostulante> {
       drawer: const SideBar(),
       appBar: AppBar(
         title: const Text('Recursos Humanos'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.message),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MessageListScreen(userId: widget.userId),
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: FutureBuilder<Postulante>(
         future: _postulanteFuture,
@@ -143,6 +157,7 @@ class _DashboardPostulanteState extends State<DashboardPostulante> {
                               style: TextStyle(
                                 color:
                                     Colors.white, // Color del texto del botón
+
                               ),
                             ),
                           ),
@@ -165,6 +180,7 @@ class _DashboardPostulanteState extends State<DashboardPostulante> {
                               style: TextStyle(
                                 color:
                                     Colors.white, // Color del texto del botón
+
                               ),
                             ),
                           ),

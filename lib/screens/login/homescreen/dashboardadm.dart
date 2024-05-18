@@ -1,6 +1,7 @@
 // dashboard_postulante.dart
 import 'package:rrhh_movil/components/components.dart';
 import 'package:flutter/material.dart';
+import 'package:rrhh_movil/screens/mensajesScreen.dart';
 
 class DashboardAdministrador extends StatefulWidget {
   final String userId;
@@ -24,6 +25,19 @@ class _DashboardAdministradorState extends State<DashboardAdministrador> {
         drawer: const SideBar(),
         appBar: AppBar(
           title: const Text('Recursos Humanos'),
+          actions: [
+          IconButton(
+            icon: const Icon(Icons.message),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MessageListScreen(userId: widget.userId),
+                ),
+              );
+            },
+          ),
+        ],
         ),
         body: const Text('Administrador'));
   }
