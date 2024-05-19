@@ -30,11 +30,14 @@ class _ChatScreenState extends State<ChatScreen> {
   MessageService? _messageService;
 
   @override
+  @override
   void initState() {
     super.initState();
     _messageService = Provider.of<MessageService>(context, listen: false);
-    _messageService!.fetchMessages(widget.currentUserId, widget.otherUserId.toString());
-    _messageService!.startPolling(widget.currentUserId, widget.otherUserId.toString());
+    _messageService!
+        .fetchMessages(widget.currentUserId, widget.otherUserId.toString());
+    _messageService!
+        .startPolling(widget.currentUserId, widget.otherUserId.toString());
     _messageService!.messagesStream.listen((_) => _scrollToEnd());
   }
 
@@ -46,24 +49,34 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   String formatTime(DateTime dateTime) {
+    DateTime adjustedDateTime = adjustDateTime(dateTime);
+    return DateFormat('hh:mm a').format(adjustedDateTime);
+  }
+
+  String formatTime2(DateTime dateTime) {
     return DateFormat('hh:mm a').format(dateTime);
   }
 
   String formatDate(DateTime dateTime) {
-    final today = DateTime.now();
+    DateTime adjustedDateTime = adjustDateTime(dateTime);
+    final today = DateTime.now(); // También ajustamos 'hoy'
     final yesterday = today.subtract(Duration(days: 1));
 
-    if (dateTime.year == today.year &&
-        dateTime.month == today.month &&
-        dateTime.day == today.day) {
+    if (adjustedDateTime.year == today.year &&
+        adjustedDateTime.month == today.month &&
+        adjustedDateTime.day == today.day) {
       return 'Hoy';
-    } else if (dateTime.year == yesterday.year &&
-               dateTime.month == yesterday.month &&
-               dateTime.day == yesterday.day) {
+    } else if (adjustedDateTime.year == yesterday.year &&
+        adjustedDateTime.month == yesterday.month &&
+        adjustedDateTime.day == yesterday.day) {
       return 'Ayer';
     } else {
-      return DateFormat('dd MMM yyyy').format(dateTime);
+      return DateFormat('dd MMM yyyy').format(adjustedDateTime);
     }
+  }
+
+  DateTime adjustDateTime(DateTime dateTime) {
+    return dateTime.subtract(Duration(hours: 4));
   }
 
   void _scrollToEnd() {
@@ -82,8 +95,9 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pop(context, true);  // Return true to indicate that the page needs to be reloaded
-        return false;  // Prevent the default pop behavior as we have already handled it
+        Navigator.pop(context,
+            true); // Return true to indicate that the page needs to be reloaded
+        return false; // Prevent the default pop behavior as we have already handled it
       },
       child: Scaffold(
         appBar: AppBar(
@@ -91,7 +105,8 @@ class _ChatScreenState extends State<ChatScreen> {
             children: [
               widget.avatar != null
                   ? CircleAvatar(
-                      backgroundImage: NetworkImage('http://137.184.179.201/${widget.avatar}'),
+                      backgroundImage: NetworkImage(
+                          'http://137.184.179.201/${widget.avatar}'),
                     )
                   : CircleAvatar(
                       child: Text(widget.otherUserName[0]),
@@ -146,15 +161,22 @@ class _ChatScreenState extends State<ChatScreen> {
                             ),
                           ),
                           ...messages.map((message) {
-                            bool isCurrentUser = message.emisorId.toString() == widget.currentUserId;
+                            bool isCurrentUser = message.emisorId.toString() ==
+                                widget.currentUserId;
 
                             return Align(
-                              alignment: isCurrentUser ? Alignment.centerRight : Alignment.centerLeft,
+                              alignment: isCurrentUser
+                                  ? Alignment.centerRight
+                                  : Alignment.centerLeft,
                               child: Container(
-                                margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                                margin: EdgeInsets.symmetric(
+                                    vertical: 5, horizontal: 10),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 15),
                                 decoration: BoxDecoration(
-                                  color: isCurrentUser ? Colors.blueAccent : Colors.grey[300],
+                                  color: isCurrentUser
+                                      ? Colors.blueAccent
+                                      : Colors.grey[300],
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Column(
@@ -163,7 +185,9 @@ class _ChatScreenState extends State<ChatScreen> {
                                     Text(
                                       message.mensaje,
                                       style: TextStyle(
-                                        color: isCurrentUser ? Colors.white : Colors.black,
+                                        color: isCurrentUser
+                                            ? Colors.white
+                                            : Colors.black,
                                       ),
                                     ),
                                     SizedBox(height: 5),
@@ -171,17 +195,24 @@ class _ChatScreenState extends State<ChatScreen> {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Text(
-                                          formatTime(message.createdAt),
+                                          formatTime(message
+                                              .createdAt), // Usar la hora ajustada
                                           style: TextStyle(
-                                            color: isCurrentUser ? Colors.white70 : Colors.black54,
+                                            color: isCurrentUser
+                                                ? Colors.white70
+                                                : Colors.black54,
                                             fontSize: 12,
                                           ),
                                         ),
                                         if (isCurrentUser)
                                           Icon(
-                                            message.leido == 1 ? Icons.done_all : Icons.done,
+                                            message.leido == 1
+                                                ? Icons.done_all
+                                                : Icons.done,
                                             size: 16,
-                                            color: message.leido == 1 ? Colors.white70 : Colors.white54,
+                                            color: message.leido == 1
+                                                ? Colors.white70
+                                                : Colors.white54,
                                           ),
                                       ],
                                     ),
@@ -231,7 +262,9 @@ class _ChatScreenState extends State<ChatScreen> {
                                 _errorMessage = null;
                               });
                               try {
-                                await Provider.of<MessageService>(context, listen: false).sendMessage(
+                                await Provider.of<MessageService>(context,
+                                        listen: false)
+                                    .sendMessage(
                                   widget.currentUserId,
                                   widget.otherUserId,
                                   _messageController.text,
