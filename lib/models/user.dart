@@ -21,6 +21,8 @@ class User {
     String updatedAt;
     String profilePhotoUrl;
     String? foto;
+    String cargo;
+    String departamento;
 
     User({
         required this.id,
@@ -37,7 +39,9 @@ class User {
         required this.createdAt,
         required this.updatedAt,
         required this.profilePhotoUrl,
-        required this.foto
+        required this.foto,
+        required this.cargo,
+        required this.departamento
     });
 
     factory User.fromJson(Map<String, dynamic> json) => User(
@@ -56,6 +60,8 @@ class User {
         updatedAt: json["updated_at"],
         profilePhotoUrl: json["profile_photo_url"],
         foto: json["foto"],
+        cargo: json["cargo"],
+        departamento: json["departamento"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -74,5 +80,7 @@ class User {
         "updated_at": updatedAt,
         "profile_photo_url": profilePhotoUrl,
         "foto": foto,
+        "cargo": cargo,
+        "departamento": departamento,
     };
 }
