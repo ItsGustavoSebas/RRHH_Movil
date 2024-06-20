@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rrhh_movil/screens/postulacion/educacion/crearEducacion.dart';
 import 'package:rrhh_movil/screens/postulacion/educacion/editarEducacion.dart';
+import 'package:rrhh_movil/services/permiso_service.dart';
 import 'package:rrhh_movil/services/services.dart';
 import 'package:http/http.dart' as http;
 
@@ -37,6 +38,7 @@ class _EducacionesScreenState extends State<EducacionesScreen> {
         const SnackBar(
           content: Text('Educación eliminada exitosamente'),
         ),
+
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
