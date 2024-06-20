@@ -1,3 +1,4 @@
+import 'package:rrhh_movil/screens/permisos/permisosView.dart';
 import 'package:rrhh_movil/screens/screens.dart';
 import 'package:rrhh_movil/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
@@ -66,10 +67,13 @@ class SideBar extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.assignment),
-                title: const Text('Gestionar Permisos de Personal'),
+                leading: Icon(Icons.book_sharp),
+                title: Text(
+                  'Gestionar mis permisos',
+                  style: TextStyle(color: Colors.black),
+                ),
                 onTap: () {
-                  Navigator.pushNamed(context, 'historial');
+                  Navigator.push(context, MaterialPageRoute( builder: (context) => const PermisosView()));
                 },
               ),
             ],
