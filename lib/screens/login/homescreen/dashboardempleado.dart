@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rrhh_movil/components/components.dart';
 import 'package:rrhh_movil/screens/mensajesScreen.dart';
+import 'package:rrhh_movil/screens/notificacionesScreen.dart';
 import 'package:rrhh_movil/services/auth/auth_service.dart';
 
 class DashboardEmpleado extends StatefulWidget {
@@ -41,6 +42,17 @@ class _DashboardEmpleadoState extends State<DashboardEmpleado> {
                 MaterialPageRoute(
                   builder: (context) =>
                       MessageListScreen(userId: widget.userId),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.notifications),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NotificacionesScreen(),
                 ),
               );
             },
