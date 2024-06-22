@@ -1,7 +1,7 @@
 // welcome.dart
 import 'package:flutter/material.dart';
 import 'package:rrhh_movil/screens/login/login_screen.dart';
-import 'package:rrhh_movil/screens/login/register_screen.dart';
+import 'package:rrhh_movil/screens/puestosDisponiblesInicio.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -29,7 +29,7 @@ class WelcomeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const RegisterSreen(),
+                    builder: (context) => const PuestosDisponibleInicioScreen(),
                   ),
                 );
               },

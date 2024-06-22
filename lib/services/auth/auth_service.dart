@@ -26,6 +26,7 @@ class AuthService extends ChangeNotifier {
                 'password': password,
                 'device_name': device_name,
               }));
+      print(response);
 
       if (response.statusCode == 200) {
         String token = response.body.toString();
@@ -35,6 +36,7 @@ class AuthService extends ChangeNotifier {
         return 'incorrecto';
       }
     } catch (e) {
+      print(e.hashCode);
       return 'error';
     }
   }
