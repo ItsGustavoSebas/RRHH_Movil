@@ -53,7 +53,7 @@ class _MessageListScreenState extends State<MessageListScreen> {
                   leading: message.avatar != null
                       ? CircleAvatar(
                           backgroundImage: NetworkImage(
-                              'http://137.184.179.201/${message.avatar}'))
+                              'http://10.0.2.2:8000/${message.avatar}'))
                       : CircleAvatar(child: Text(message.name[0])),
                   trailing: message.pendiente > 0
                       ? CircleAvatar(
