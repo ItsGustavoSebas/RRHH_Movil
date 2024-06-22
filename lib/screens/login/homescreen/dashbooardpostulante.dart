@@ -2,7 +2,12 @@
 import 'package:rrhh_movil/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:rrhh_movil/models/models.dart';
+
+import 'package:rrhh_movil/screens/contrato/contrato_screen.dart';
+import 'package:rrhh_movil/screens/entrevista/entrevista_screen.dart';
+
 import 'package:rrhh_movil/screens/notificacionesScreen.dart';
+
 import 'package:rrhh_movil/screens/postulacion/postulanteinfo.dart';
 import 'package:rrhh_movil/screens/postulacion/postulanteinfoEdit.dart';
 import 'package:rrhh_movil/screens/mensajesScreen.dart';
@@ -124,7 +129,12 @@ class _DashboardPostulanteState extends State<DashboardPostulante> {
                           if (postulante.estado == 'oferta') ...[
                             ElevatedButton(
                               onPressed: () {
-                                // Acción del botón "Información del contrato"
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ContratoScreen(postulanteId: postulante.id), // Asegúrate de tener el ID de la entrevista
+                                  ),
+                                );
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor:
@@ -143,7 +153,12 @@ class _DashboardPostulanteState extends State<DashboardPostulante> {
                           if (postulante.estado == 'entrevista') ...[
                             ElevatedButton(
                               onPressed: () {
-                                // Acción del botón "Información del contrato"
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EntrevistaScreen(postulanteId: postulante.id), // Asegúrate de tener el ID de la entrevista
+                                  ),
+                                );
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor:
