@@ -1,3 +1,4 @@
+import 'package:rrhh_movil/screens/llamada/llamada_screen.dart';
 import 'package:rrhh_movil/screens/screens.dart';
 import 'package:rrhh_movil/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
@@ -70,6 +71,18 @@ class SideBar extends StatelessWidget {
                 title: const Text('Gestionar Permisos de Personal'),
                 onTap: () {
                   Navigator.pushNamed(context, 'historial');
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.warning),
+                title: const Text('Llamadas de Atención'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LlamadaScreen(empleadoId: auth.user.id), // Asegúrate de tener el ID de la entrevista
+                    ),
+                  );              
                 },
               ),
             ],
