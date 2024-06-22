@@ -95,7 +95,7 @@ class _DashboardPostulanteState extends State<DashboardPostulante> {
                       CircleAvatar(
                         radius: 50,
                         backgroundImage: NetworkImage(
-                            'http://10.0.2.2:8000/${postulante.foto}'), // Reemplaza con la URL de la imagen del usuario
+                            'http://137.184.179.201/${postulante.foto}'), // Reemplaza con la URL de la imagen del usuario
                       ),
                       const SizedBox(width: 16),
                       Column(

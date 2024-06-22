@@ -30,7 +30,7 @@ class UserListScreen extends StatelessWidget {
                 leading: user.avatarUrl != null
                     ? CircleAvatar(
                         backgroundImage: NetworkImage(
-                            'http://10.0.2.2:8000/${user.avatarUrl}'))
+                            'http://137.184.179.201/${user.avatarUrl}'))
                     : CircleAvatar(child: Text(user.name[0])),
                 onTap: () {
                   Navigator.push(

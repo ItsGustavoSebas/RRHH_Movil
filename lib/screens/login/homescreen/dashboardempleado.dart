@@ -102,7 +102,7 @@ class _DashboardEmpleadoState extends State<DashboardEmpleado> {
                     CircleAvatar(
                       radius: 50,
                       backgroundImage: NetworkImage(
-                          'http://10.0.2.2:8000/${user.foto ?? 'default.jpg'}'),
+                          'http://137.184.179.201/${user.foto ?? 'default.jpg'}'),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
