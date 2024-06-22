@@ -1,8 +1,10 @@
 import 'package:rrhh_movil/components/components.dart';
+import 'package:rrhh_movil/screens/permisos/permisosView.dart';
 import 'package:rrhh_movil/screens/screens.dart';
 import 'package:rrhh_movil/services/fuente_de_contratacion.dart';
 import 'package:rrhh_movil/services/idiomas.dart';
 import 'package:rrhh_movil/services/nivel_ingles.dart';
+import 'package:rrhh_movil/services/permiso_service.dart';
 import 'package:rrhh_movil/services/puesto_disponible.dart';
 import 'package:rrhh_movil/services/services.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +36,7 @@ class _AppStateState extends State<AppState> {
         ChangeNotifierProvider(create: (_) => NivelIdiomasService()),
         ChangeNotifierProvider(create: (_) => UserService()),
         ChangeNotifierProvider(create: (_) => MessageService()),
+        ChangeNotifierProvider(create: (_) => PermisosService()),
 
       ],
       child: const MyApp(),
@@ -54,7 +57,7 @@ class MyApp extends StatelessWidget {
         '/': (_) => const HomeScreen(),
         'splash': (_) => const SplashScreen(),
         'login': (_) => const LoginScreen(),
-        'historial': (_) => const HistorialScreen(), // Ruta actualizada
+   
       },
       theme: ThemeData.light().copyWith(
         scaffoldBackgroundColor: const Color.fromARGB(255, 248, 244, 243),
@@ -73,6 +76,7 @@ class MyApp extends StatelessWidget {
         const Locale('es', 'ES'), // Español
       ],
       locale: const Locale('es', 'ES'), // Establece el idioma por defecto
+  
     );
   }
 }

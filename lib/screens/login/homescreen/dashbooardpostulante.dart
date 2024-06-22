@@ -2,11 +2,16 @@
 import 'package:rrhh_movil/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:rrhh_movil/models/models.dart';
+
 import 'package:rrhh_movil/screens/contrato/contrato_screen.dart';
 import 'package:rrhh_movil/screens/entrevista/entrevista_screen.dart';
+
+import 'package:rrhh_movil/screens/notificacionesScreen.dart';
+
 import 'package:rrhh_movil/screens/postulacion/postulanteinfo.dart';
 import 'package:rrhh_movil/screens/postulacion/postulanteinfoEdit.dart';
 import 'package:rrhh_movil/screens/mensajesScreen.dart';
+import 'package:rrhh_movil/screens/puestosDisponiblesPostulante.dart';
 import 'package:rrhh_movil/screens/screens.dart';
 import 'package:rrhh_movil/services/postulante.dart';
 
@@ -43,7 +48,19 @@ class _DashboardPostulanteState extends State<DashboardPostulante> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MessageListScreen(userId: widget.userId),
+                  builder: (context) =>
+                      MessageListScreen(userId: widget.userId),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.notifications),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NotificacionesScreen(),
                 ),
               );
             },
@@ -84,10 +101,16 @@ class _DashboardPostulanteState extends State<DashboardPostulante> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          if (postulante.estado == 'incompleto') ...[
+                          if (postulante.estado == 'rechazado') ...[
                             ElevatedButton(
                               onPressed: () {
-                                // Acción del botón "Información del contrato"
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        PuestosDisponiblePostulanteScreen(),
+                                  ),
+                                );
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor:
@@ -156,7 +179,7 @@ class _DashboardPostulanteState extends State<DashboardPostulante> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>postulanteinfoEdit(),
+                                  builder: (context) => postulanteinfoEdit(),
                                 ),
                               );
                             },
@@ -169,7 +192,6 @@ class _DashboardPostulanteState extends State<DashboardPostulante> {
                               style: TextStyle(
                                 color:
                                     Colors.white, // Color del texto del botón
-
                               ),
                             ),
                           ),
@@ -192,7 +214,6 @@ class _DashboardPostulanteState extends State<DashboardPostulante> {
                               style: TextStyle(
                                 color:
                                     Colors.white, // Color del texto del botón
-
                               ),
                             ),
                           ),
