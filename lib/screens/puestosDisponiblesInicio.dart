@@ -50,7 +50,7 @@ class _PuestosDisponibleInicioScreenState
           }
           return Scaffold(
             appBar: AppBar(
-              title: const Text('Notificaciones'),
+              title: const Text('Puestos Disponibles'),
             ),
             body: ListView.builder(
               itemCount: puestosDisponiblesService.puestosDisponible.length,
