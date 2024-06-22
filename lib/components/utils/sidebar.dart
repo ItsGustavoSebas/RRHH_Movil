@@ -40,7 +40,7 @@ class SideBar extends StatelessWidget {
                   child: ClipOval(
                     child: auth.user.foto != null
                         ? Image.network(
-                            'http://137.184.179.201/${auth.user.foto}',
+                            'http://10.0.2.2:8000/${auth.user.foto}',
                             width: 90,
                             height: 90,
                             fit: BoxFit.cover,

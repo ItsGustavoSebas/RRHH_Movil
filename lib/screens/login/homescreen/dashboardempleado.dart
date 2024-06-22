@@ -4,6 +4,8 @@ import 'package:rrhh_movil/components/components.dart';
 import 'package:rrhh_movil/screens/mensajesScreen.dart';
 import 'package:rrhh_movil/screens/notificacionesScreen.dart';
 import 'package:rrhh_movil/services/auth/auth_service.dart';
+import 'package:rrhh_movil/services/asistencias.dart';
+import 'package:rrhh_movil/models/horario.dart';
 
 class DashboardEmpleado extends StatefulWidget {
   final String userId;
@@ -15,9 +17,31 @@ class DashboardEmpleado extends StatefulWidget {
 }
 
 class _DashboardEmpleadoState extends State<DashboardEmpleado> {
+  List<Horario> horarios = [];
+  bool isLoading = true;
+  String errorMessage = '';
+
   @override
   void initState() {
     super.initState();
+    fetchHorario();
+  }
+
+  Future<void> fetchHorario() async {
+    final asistenciaService = AsistenciaService();
+    try {
+      final fetchedHorarios =
+          await asistenciaService.getHorario(int.parse(widget.userId));
+      setState(() {
+        horarios = fetchedHorarios;
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        errorMessage = 'Error al obtener los horarios';
+        isLoading = false;
+      });
+    }
   }
 
   @override
@@ -78,7 +102,7 @@ class _DashboardEmpleadoState extends State<DashboardEmpleado> {
                     CircleAvatar(
                       radius: 50,
                       backgroundImage: NetworkImage(
-                          'http://137.184.179.201/${user.foto ?? 'default.jpg'}'),
+                          'http://10.0.2.2:8000/${user.foto ?? 'default.jpg'}'),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
@@ -165,56 +189,49 @@ class _DashboardEmpleadoState extends State<DashboardEmpleado> {
                   borderRadius: BorderRadius.circular(12.0),
                 ),
                 padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
-                      'Horario de Entrada: 8:00 AM',
-                      style: TextStyle(fontSize: 16, color: Colors.black),
-                    ),
-                    Text(
-                      'Horario de Salida: 5:00 PM',
-                      style: TextStyle(fontSize: 16, color: Colors.black),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 16),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-                padding: const EdgeInsets.all(16.0),
-                child: const Text(
-                  'Asistencia',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
-                      'Fecha: 2024-06-06',
-                      style: TextStyle(fontSize: 16, color: Colors.black),
-                    ),
-                    Text(
-                      'Estado: Presente',
-                      style: TextStyle(fontSize: 16, color: Colors.black),
-                    ),
-                  ],
-                ),
+                child: isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : errorMessage.isNotEmpty
+                        ? Center(child: Text(errorMessage))
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: horarios.map((horario) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Día: ${horario.dia}',
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Hora de Inicio: ${horario.horaInicio}',
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Hora de Fin: ${horario.horaFin}',
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Hora Límite: ${horario.horaLimite}',
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                ],
+                              );
+                            }).toList(),
+                          ),
               ),
               const SizedBox(height: 16),
             ],

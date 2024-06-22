@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<bool> hasRole(String userId, String role) async {
     final response = await http
-        .get(Uri.parse('http://137.184.179.201/api/getRol/$userId/$role'));
+        .get(Uri.parse('http://10.0.2.2:8000/api/getRol/$userId/$role'));
 
     if (response.statusCode == 200) {
       return json.decode(response.body) == true;

@@ -106,7 +106,7 @@ class _ChatScreenState extends State<ChatScreen> {
               widget.avatar != null
                   ? CircleAvatar(
                       backgroundImage: NetworkImage(
-                          'http://137.184.179.201/${widget.avatar}'),
+                          'http://10.0.2.2:8000/${widget.avatar}'),
                     )
                   : CircleAvatar(
                       child: Text(widget.otherUserName[0]),
