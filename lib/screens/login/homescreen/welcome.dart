@@ -1,4 +1,3 @@
-// welcome.dart
 import 'package:flutter/material.dart';
 import 'package:rrhh_movil/screens/login/login_screen.dart';
 import 'package:rrhh_movil/screens/puestosDisponiblesInicio.dart';
